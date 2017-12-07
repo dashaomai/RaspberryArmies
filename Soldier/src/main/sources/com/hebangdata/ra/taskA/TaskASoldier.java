@@ -28,13 +28,16 @@ public class TaskASoldier {
 		channel.exchangeDeclare(Commucation.TASK_A_EXCHANGER, BuiltinExchangeType.TOPIC, true);
 
 		final String queueName = channel.queueDeclare().getQueue();
-		channel.queueBind(queueName, Commucation.TASK_A_EXCHANGER, "task.*");
+		channel.queueBind(queueName, Commucation.TASK_A_EXCHANGER, "task.#");
 
 		channel.basicConsume(queueName, false, new DefaultConsumer(channel) {
 			@Override
 			public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
 				// 收到消息，把输入参数转换出来
 				final TaskAParameter parameter = SerializableUtils.getObject(body);
+
+				// 打印 task.a
+				log.info(envelope.getRoutingKey());
 
 				// 生成对应的返回参数
 				final TaskAResponse response = calculate(parameter);
@@ -63,7 +66,6 @@ public class TaskASoldier {
 
 		for (final String line : parameter.getArticle()) {
 			if (null == line) continue;
-
 			for (final Character chr : line.toCharArray()) {
 				if (response.statistics.containsKey(chr)) {
 					response.statistics.put(chr, response.statistics.get(chr) + 1L);

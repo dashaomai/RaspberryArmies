@@ -51,15 +51,9 @@ public class TaskAOfficer {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
 					if (properties.getCorrelationId().equals(correlationId)) {
-//						try {
-//							final ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(body));
-//							final TaskAResponse response = (TaskAResponse) input.readObject();
-							final TaskAResponse response = SerializableUtils.getObject(body);
+						final TaskAResponse response = SerializableUtils.getObject(body);
 
-							if (null != response) responses.offer(response);
-//						} catch (ClassNotFoundException e) {
-//							log.error("反序列化时类没找到：{}", e);
-//						}
+						if (null != response) responses.offer(response);
 					} else {
 						log.warn("回调回来的 correlationId 不符：{} - {}", properties.getCorrelationId(), correlationId);
 					}
