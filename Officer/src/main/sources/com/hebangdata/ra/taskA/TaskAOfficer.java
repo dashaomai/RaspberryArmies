@@ -68,13 +68,15 @@ public class TaskAOfficer {
 
 			for (int i = 0; i < subBatch; i++) {
 				final TaskAParameter subParameter = new TaskAParameter(parameter.getSubArticle(i * subSize, subSize));
-				channel.basicPublish(parameter.getExchangerName(), routingKey, true, properties, subParameter.getBytes());
+				channel.basicPublish(parameter.getExchangerName(), routingKey, true, properties, SerializableUtils.getBytes(subParameter));
 
 				log.info("发送了一次子任务：{} - {}", i * subSize, subSize);
 			}
 
 			for (int i = 0; i < subBatch; i++) {
 				final TaskAResponse response = responses.poll(60, TimeUnit.SECONDS);
+
+				if (null == response) break;
 
 				log.info("获得反馈：{}", response.statistics);
 			}

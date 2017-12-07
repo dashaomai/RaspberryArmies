@@ -61,6 +61,18 @@ public class TaskASoldier {
 
 		final TaskAResponse response = new TaskAResponse();
 
+		for (final String line : parameter.getArticle()) {
+			if (null == line) continue;
+
+			for (final Character chr : line.toCharArray()) {
+				if (response.statistics.containsKey(chr)) {
+					response.statistics.put(chr, response.statistics.get(chr) + 1L);
+				} else {
+					response.statistics.put(chr, 1L);
+				}
+			}
+		}
+
 		// 伪代码，先不做计算，直接返回空结果
 		return response;
 	}

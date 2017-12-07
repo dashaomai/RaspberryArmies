@@ -1,17 +1,21 @@
 package com.hebangdata.ra.vos;
 
+import com.hebangdata.ra.consts.Commucation;
 import com.hebangdata.ra.consts.Parameter;
-import com.hebangdata.ra.utils.SerializableUtils;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 任务 A 的参数，可以分解为更小的参数
  */
 public class TaskAParameter implements Parameter {
-	private final static String EXCHANGER_NAME = "task_a_x";
-
 	private final String[] article;
+
+	public String[] getArticle() {
+		return article;
+	}
 
 	public int getArticleLength() {
 		return article.length;
@@ -38,17 +42,17 @@ public class TaskAParameter implements Parameter {
 		final InputStream is = new FileInputStream(articlePath);
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
-		final int size = (int)reader.lines().count();
-
-		article = new String[size];
+		final List<String> buff = new ArrayList<>();
 
 		String line = reader.readLine();
-		int i = 0;
 		while (null != line) {
-			if (line.length() > 0) article[i] = line;
+			if (line.length() > 0) buff.add(line);
 
 			line = reader.readLine();
 		}
+
+		article = new String[buff.size()];
+		buff.toArray(article);
 
 		reader.close();
 		is.close();
@@ -60,11 +64,6 @@ public class TaskAParameter implements Parameter {
 
 	@Override
 	public String getExchangerName() {
-		return EXCHANGER_NAME;
-	}
-
-	@Override
-	public byte[] getBytes() {
-		return SerializableUtils.getBytes(this);
+		return Commucation.TASK_A_EXCHANGER;
 	}
 }
