@@ -27,7 +27,8 @@ public class TaskASoldier {
 		channel.basicQos(1);
 		channel.exchangeDeclare(Commucation.TASK_A_EXCHANGER, BuiltinExchangeType.TOPIC, true);
 
-		final String queueName = channel.queueDeclare().getQueue();
+		// 连接到同一个队列，来实现任务的自动分配
+		final String queueName = channel.queueDeclare(Commucation.TASK_A_QUEUE, true, false, false, null).getQueue();
 		channel.queueBind(queueName, Commucation.TASK_A_EXCHANGER, "task.#");
 
 		channel.basicConsume(queueName, false, new DefaultConsumer(channel) {
