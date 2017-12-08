@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="Soldier:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Soldier_jar</output-path>
+    <root id="root">
+      <element id="archive" name="Soldier.jar">
+        <element id="module-output" name="Soldier" />
+        <element id="module-output" name="Common" />
+      </element>
+      <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.2.3" />
+      <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
+      <element id="library" level="project" name="Maven: com.rabbitmq:amqp-client:5.0.0" />
+      <element id="library" level="project" name="Maven: org.scala-lang:scala-library:2.11.11" />
+      <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.2.3" />
+    </root>
+  </artifact>
+</component>

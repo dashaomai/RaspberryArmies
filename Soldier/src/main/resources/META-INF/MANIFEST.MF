@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: logback-core-1.2.3.jar slf4j-api-1.7.25.jar amqp-client-5.
+ 0.0.jar scala-library-2.11.11.jar logback-classic-1.2.3.jar
+Main-Class: com.hebangdata.ra.Launcher
+
