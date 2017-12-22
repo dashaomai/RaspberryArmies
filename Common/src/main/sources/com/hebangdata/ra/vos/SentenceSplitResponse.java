@@ -1,7 +1,6 @@
 package com.hebangdata.ra.vos;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 public class SentenceSplitResponse implements Serializable {
 	public final String filePath;
